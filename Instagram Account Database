@@ -49,7 +49,7 @@ CREATE TABLE follows(
 	PRIMARY KEY(follower_id,followee_id)
 );
 
-/*Tags*/
+*Tags*
 CREATE TABLE tags(
 	id INTEGER AUTO_INCREMENT PRIMARY KEY,
 	tag_name VARCHAR(255) UNIQUE NOT NULL,
