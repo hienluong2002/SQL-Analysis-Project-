@@ -1,35 +1,25 @@
 /*I want to reward our users who have been around the longest.  
 1. Find the 5 oldest users.*/
+
 SELECT * FROM users
 ORDER BY created_at
 LIMIT 5;
 
-
 /*I need to figure out when to schedule an ad campgain.
 2. What day of the week do most users register on?
+
 SELECT date_format(created_at,'%W') AS 'day of the week', COUNT(*) AS 'total registration'
 FROM users
 GROUP BY 1
 ORDER BY 2 DESC;
 
-Or another way: 
-
-SELECT 
-    DAYNAME(created_at) AS day,
-    COUNT(*) AS total
-FROM users
-GROUP BY day
-ORDER BY total DESC
-LIMIT 2;
-
-
 /*I want to target our inactive users with an email campaign.
 3. Find the users who have never posted a photo*/
+
 SELECT username
 FROM users
 LEFT JOIN photos ON users.id = photos.user_id
 WHERE photos.id IS NULL;
-
 
 /* I'm running a new contest to see who can get the most likes on a single photo.
 4. Who is the winner?
@@ -66,10 +56,10 @@ FROM (SELECT users.username,COUNT(photos.image_url) AS total_posts_per_user
 
 
 8. Total numbers of users who have posted at least one time 
+
 SELECT COUNT(DISTINCT(users.id)) AS total_number_of_users_with_posts
 FROM users
 JOIN photos ON users.id = photos.user_id;
-
 
 9. The brand wants to know which hashtags to use in a post so i have to find out are the top 5 most commonly used hashtags?
 
@@ -79,7 +69,6 @@ JOIN photo_tags ON tags.id = photo_tags.tag_id
 GROUP BY tags.id
 ORDER BY total DESC;
 
-
 10. Find users who have liked every single photo on the site
 
 SELECT users.id,username, COUNT(users.id) As total_likes_by_user
@@ -87,7 +76,6 @@ FROM users
 JOIN likes ON users.id = likes.user_id
 GROUP BY users.id
 HAVING total_likes_by_user = (SELECT COUNT(*) FROM photos);
-
 
 11. Find users who have never commented on a photo
 
